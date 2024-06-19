@@ -1,10 +1,10 @@
-from job_posting import JobPosting
+from .job_posting import JobPosting
 from datetime import datetime
-from json import loads
+from json import loads, dumps
 from bs4 import BeautifulSoup
 import asyncio
 from aiohttp import ClientSession
-from async_request_helpers import fetch_response_text
+from .async_request_helpers import fetch_response_text
 from urllib.parse import urlencode
 
 BASE_URL = "https://workforcenow.adp.com/mascsr/default/"
@@ -15,7 +15,7 @@ POSTING_URL_SUFFIX = "mdf/recruitment/recruitment.html"
 async def get_job_postings(
         c_id: str,
         company: str,
-        top: int=1000,
+        user_query: str="",
         cc_id: str="19000101_000001") -> list:
     """
     Gets job postings from ADP
@@ -23,17 +23,23 @@ async def get_job_postings(
     Args:
         c_id (str): The c ID of the specific employer
         company (str): The company that posted the job
-        top (int, default=1000): The number of job openings to retrieve
+        user_query (str, default=""): The query to search for
         ccId (str, default="19000101_000001"): The cc ID (unsure what this is, 
             seems to always be "19000101_000001")
     Returns:
         list(JobPosting): A list of job postings
+        
+    For example, Canandaigua National Bank & Trust's career search site is 
+    "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=2e4e5521-e8a5-4572-9ffd-3c8e382ee6f2&ccId=19000101_000001"
+    where "2e4e5521-e8a5-4572-9ffd-3c8e382ee6f2" is the c_id and 
+    "19000101_000001" is the cc_id. Check the URL of a specific employer's 
+    career site for specifics.
     """
     
     if (
-        not all(isinstance(arg, str) for arg in [c_id, cc_id])
-        or not isinstance(top, int)):
+        not all(isinstance(arg, str) for arg in [c_id, cc_id, user_query])):
         raise Exception("Got invalid args.")
+
     async with ClientSession() as session:
         requisition_params = {
             "cid": c_id,
@@ -41,17 +47,32 @@ async def get_job_postings(
             "lang": "en_US",
             "ccId": cc_id,
             "locale": "en_US",
-            "$top": top
+            "$top": 20,
+            "$skip": 1,
+            "userQuery": user_query
         }
+        
+        job_ids = []
         url = BASE_URL + REQUISITIONS_URL_SUFFIX
-        response_text = await fetch_response_text(
-            session=session, url=url, method="GET", params=requisition_params)
-        response_json = loads(response_text)
-        jobs = response_json["jobRequisitions"]
-        job_ids = [
-            job["customFieldGroup"]["stringFields"][0]["stringValue"]
-            for job in jobs
-        ]
+        async def _get_next_batch():
+            response_text = await fetch_response_text(
+                session=session, 
+                url=url, 
+                method="GET", 
+                params=requisition_params)
+            response_json = loads(response_text)
+            return response_json
+        while True:
+            response_json = await _get_next_batch()
+            jobs = response_json["jobRequisitions"]
+            if len(jobs) == 0:
+                break
+            jobs = response_json["jobRequisitions"]
+            job_ids += [
+                job["customFieldGroup"]["stringFields"][0]["stringValue"]
+                for job in jobs
+            ]
+            requisition_params["$skip"] += 20
     
         requisition_params.pop("$top")
         async def _get_posting_for_job_id(job_id):
@@ -79,6 +100,7 @@ async def get_job_postings(
         
             locations = [
                 location["nameCode"]["shortName"].strip()
+                if "shortName" in location["nameCode"] else "N/A"
                 for location in response_json["requisitionLocations"]]
 
             posting_params = {
