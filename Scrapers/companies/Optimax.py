@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "0dfe1cd9-a147-4cda-846c-b9a9083395e6"
 COMPANY = "Optimax Systems"

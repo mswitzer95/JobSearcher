@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "2e4e5521-e8a5-4572-9ffd-3c8e382ee6f2"
 COMPANY = "Canadaigua National Bank & Trust"

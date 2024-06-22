@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "3412d63d-3eba-4d9f-93f9-621ab0a2ca92"
 COMPANY = "Cobblestone Capital"

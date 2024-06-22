@@ -1,4 +1,4 @@
-from common_library.Workday_scraper import *
+from ..common_library.Workday_scraper import *
 
 WORKDAY_EMPLOYER_NAME = "gorbel"
 CAREER_SITE_NAME = "gorbelcareers"

@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "2fcbcca3-5106-4e10-ac7b-3567590a02bd"
 COMPANY = "Sage Rutty"

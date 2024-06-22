@@ -96,7 +96,7 @@ async def get_job_postings(
                 maximum_rate = pay_grade_range["maximumRate"]["amountValue"]
                 pay = f"{minimum_rate} - {maximum_rate}"
             else:
-                pay = "N/A"
+                pay = None
         
             locations = [
                 location["nameCode"]["shortName"].strip()

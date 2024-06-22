@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "49287248-ffdf-4d9a-aa3c-b18302894ef0"
 COMPANY = "Summit FCU"

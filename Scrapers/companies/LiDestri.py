@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "3e17567d-22fe-47cf-a1bf-ff02192fad79"
 COMPANY = "LiDestri"

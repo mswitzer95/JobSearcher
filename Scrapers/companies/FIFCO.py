@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "39c19775-5868-44f1-a8a2-c758a1dd4bbb"
 COMPANY = "FIFCO"

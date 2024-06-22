@@ -93,7 +93,7 @@ async def get_job_postings(
                 posting_info["jobDescription"], features="lxml")
             description = soup.get_text("\n").strip()
             
-            pay = "N/A"
+            pay = None
             
             link = posting_info["externalUrl"]
             

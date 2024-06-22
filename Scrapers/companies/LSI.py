@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "6937d324-4311-405a-8417-b583fbf6c762"
 COMPANY = "LSI Solutions"

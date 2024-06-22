@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 import logging
 
 C_ID = "45a38de5-f641-48c7-8a2a-89642281328d"

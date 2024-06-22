@@ -7,9 +7,9 @@ class JobPosting:
         title (str): The title of the job the posting is for
         description (str): The description of the job the posting is for
         company (str): The company that posted the job
-        pay (str): The pay rate of the job
+        pay (str, None): The pay rate of the job
         link (str): The link to the job posting
-        location (str): The location of the job
+        location (list(str)): The locations of the job
     """
     
     def __init__(
@@ -17,7 +17,7 @@ class JobPosting:
             title: str,
             description: str,
             company: str,
-            pay: str,
+            pay: str | None,
             link: str,
             locations: list) -> None:
         """
@@ -35,7 +35,8 @@ class JobPosting:
         if (
             not all(
                 isinstance(arg, str) 
-                for arg in [title, description, company, pay, link])
+                for arg in [title, description, company, link])
+            or not isinstance(pay, (str, type(None)))    
             or not isinstance(locations, list)
             or not all(isinstance(location, str) for location in locations)):
             raise Exception("Invalid inputs.")

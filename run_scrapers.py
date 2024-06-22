@@ -5,21 +5,21 @@ import asyncio
 from importlib import import_module
 import logging
 
-COMPANIES_DIR = path.join(".", "companies")
-RESULTS_FILE_NAME = path.join(".", "results.json")
+COMPANIES_DIR = path.join(".", "scrapers", "companies")
+RESULTS_FILE_NAME = path.join(".", "web_app", "public", "scraper_results.json")
 SCRAPER_FILES = [
     file_name for file_name in listdir(COMPANIES_DIR)
     if path.splitext(file_name)[-1] == ".py"
     and path.splitext(file_name)[0] != "__init__"
 ]
 SCRAPER_MODULES = [
-    import_module("." + module, package="companies") for module in [
+    import_module("." + module, package="scrapers.companies") for module in [
         path.splitext(file_name)[0] for file_name in SCRAPER_FILES
     ]
 ]
 
 # Setting up logging
-LOGGING_FILE_NAME = "results.log"
+LOGGING_FILE_NAME = path.join(".", "scrapers", "scraper_results.log")
 open(LOGGING_FILE_NAME, mode="w").close()
 logging.basicConfig(filename=LOGGING_FILE_NAME, level=logging.DEBUG)
 LOGGER = logging.getLogger()
@@ -47,6 +47,9 @@ async def main():
     all_postings = sum(all_postings, [])
     with open(RESULTS_FILE_NAME, mode="w") as file:
         file.write(dumps(all_postings, default=lambda i: i.__dict__))
+        LOGGER.info(f"Job postings written to {RESULTS_FILE_NAME}.")
+
+    print(f"Logs written to {LOGGING_FILE_NAME}.")
 
 
 if __name__ == "__main__":

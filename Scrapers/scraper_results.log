@@ -1,0 +1,21 @@
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:root:Found 5 job postings for Invesco.
+INFO:root:Found 3 job postings for Creation Tech.
+INFO:root:Found 2 job postings for Wealth Enhancement Group.
+INFO:root:Found 12 job postings for Gorbel.
+INFO:root:Found 6 job postings for Constellation Brands.
+INFO:root:Found 2 job postings for Cobblestone Capital.
+INFO:root:Found 1 job postings for Quidel Ortho.
+INFO:root:Found 7 job postings for Sage Rutty.
+INFO:root:Found 5 job postings for Canadaigua National Bank & Trust.
+INFO:root:Found 7 job postings for Lyons National Bank.
+INFO:root:Found 2 job postings for Optimax Systems.
+INFO:root:Found 12 job postings for Summit FCU.
+INFO:root:Found 1 job postings for Keybank.
+INFO:root:Found 14 job postings for M&T Bank.
+INFO:root:Found 25 job postings for FIFCO.
+INFO:root:Found 7 job postings for LSI Solutions.
+INFO:root:Found 21 job postings for LiDestri.
+INFO:root:Found 29 job postings for Five Star Bank.
+INFO:root:Found 17 job postings for Baldwin Richardson Foods.
+INFO:root:Job postings written to ./web_app/public/scraper_results.json.

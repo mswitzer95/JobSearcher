@@ -1,4 +1,4 @@
-from common_library.ADP_scraper import *
+from ..common_library.ADP_scraper import *
 
 C_ID = "c20206a3-3c95-4ceb-b207-09e843c800d3"
 COMPANY = "Lyons National Bank"
