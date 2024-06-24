@@ -1,7 +1,8 @@
 'use client';
 
 import { JobPostingCard } from './components/JobPostingCard';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 
 export default function Home() {
     const [jobPostings, setJobPostings] = useState([]);
@@ -18,7 +19,11 @@ export default function Home() {
 
     if (jobPostings.length === 0) { return null; };
 
-    return jobPostings.map((jobPosting) =>
-        <JobPostingCard jobPosting={jobPosting} />
+    return jobPostings.map((jobPosting, index) =>
+        <React.Fragment key={index}>
+            <Box sx={{ py: 2 }} >
+                <JobPostingCard jobPosting={jobPosting} />
+            </Box>
+        </React.Fragment>
     );
 }

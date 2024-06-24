@@ -1,12 +1,14 @@
 import {
-    Card, CardHeader, CardActions, Typography, Link, IconButton, Dialog
+    Card, CardHeader, CardActions, Typography, Link, IconButton, Dialog, 
+    DialogTitle, DialogContent, Grid
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useEffect, useState } from 'react';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import ThumbDownAltOutlinedIcon from
+    '@mui/icons-material/ThumbDownAltOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 function JobPostingCard({ jobPosting }) {
@@ -16,16 +18,11 @@ function JobPostingCard({ jobPosting }) {
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
 
-    const handleLikeClick = () => {
-        let newLiked = !liked;
-        setLiked(newLiked);
-        if (newLiked) { setDisliked(false); }
-    };
-
-    const handleDislikeClick = () => {
-        let newDisliked = !disliked;
-        setDisliked(newDisliked);
-        if (newDisliked) { setLiked(false); }
+    const handleThumbClick = (
+        thumbStatus, thumbStatusSetter, otherThumbStatusSetter) => {
+        let newThumbStatus = !thumbStatus;
+        thumbStatusSetter(newThumbStatus);
+        if (newThumbStatus) { otherThumbStatusSetter(false); }
     };
 
     const title = jobPosting.title;
@@ -42,61 +39,106 @@ function JobPostingCard({ jobPosting }) {
 
     return (
         <Card variant='outlined'>
-            <CardHeader
-                title={title}
-                subheader={company}
-                sx={{ pb: 0 }}
-                action={
-                    <IconButton onClick={() => { setOpen(true); }}>
-                        <ExpandMoreIcon
-                            sx={{
-                                transform: !open ? 'rotate(180deg)' : ''
-                            }} />
-                    </IconButton>
-                } />
-            <CardHeader subheader={locationsSubheader} sx={{ py: 0 }} />
-            <CardHeader subheader={paySubheader} sx={{ py: 0 }} />
-            <CardHeader
+            <CardHeader title={title} sx={{ pb: 1 }} />
+            <Subheader subheader={company} />
+            <Subheader subheader={locationsSubheader} />
+            <Subheader subheader={paySubheader} />
+            <Subheader
                 subheader={
-                    <Link href={link}>Link to posting</Link>
-                }
-                sx={{ py: 0 }} />
-            <CardActions sx={{ pt: 0 }}>
-                <IconButton onClick={() => handleLikeClick()}>
-                    {liked
-                        ? <ThumbUpIcon />
-                        : <ThumbUpAltOutlinedIcon />}
-                </IconButton>
-                <IconButton onClick={() => handleDislikeClick()}>
-                    {disliked
-                        ? <ThumbDownIcon />
-                        : <ThumbDownAltOutlinedIcon />}
-                </IconButton>
+                    <Link
+                        href={link}
+                        target={'_blank'}
+                        rel={'noreferrer'}>
+                        Link to Posting
+                    </Link>
+                } />
+            <Subheader
+                subheader={
+                    <Link
+                        component={'button'}
+                        onClick={() => { setOpen(true); }}>
+                        Job Description
+                    </Link>
+                } />
+            <CardActions sx={{ pt: 1 }}>
+                <Grid
+                    container
+                    direction={'row'}
+                    justifyContent={'space-between'}
+                    alignItems={'center'} >
+                    <IconButton
+                        onClick={() =>
+                            handleThumbClick(
+                                liked, setLiked, setDisliked)}>
+                        {liked
+                            ? <ThumbUpIcon fontSize={'large'} />
+                            : <ThumbUpAltOutlinedIcon fontSize={'large'} />}
+                    </IconButton>
+                    <IconButton
+                        onClick={() =>
+                            handleThumbClick(
+                                disliked, setDisliked, setLiked)}>
+                        {disliked
+                            ? <ThumbDownIcon fontSize={'large'} />
+                            : <ThumbDownAltOutlinedIcon fontSize={'large'} />}
+                    </IconButton>
+                </Grid>
             </CardActions>
-            <Dialog
+            <JobDescription
+                jobDescriptionString={description}
                 open={open}
-                onClose={() => { setOpen(false); }}
-                fullWidth={true}
-                maxWidth={"md"} >
-                <Typography variant='h6'>Job Description</Typography>
-                <JobDescription jobDescriptionString={description} />
-            </Dialog>
+                setOpen={setOpen} />
         </Card>
     );
 };
 
 
-function JobDescription({ jobDescriptionString }) {
+function JobDescription({ jobDescriptionString, open, setOpen }) {
+    const handleClose = () => { setOpen(false); }
+
     const paragraphs = jobDescriptionString.split('\n');
-    const components = paragraphs.map((paragraph, index) =>
+    const textComponents = paragraphs.map((paragraph, index) =>
         <Typography
-            paragraph={paragraph.replace(/\s/g, '').length !== 0} 
+            gutterBottom={paragraph.replace(/\s/g, '').length !== 0} 
             variant='body2' 
             key={index}>
             {paragraph}
         </Typography>
     );
-    return components;
+
+    const dialog = (
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            fullWidth={true}
+            maxWidth={'md'} >
+            <DialogTitle>Job Description</DialogTitle>
+            <IconButton
+                onClick={handleClose}
+                sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    //color: (theme) => theme.palette.grey[500],
+                }}
+            >
+                <CloseIcon />
+            </IconButton>
+            <DialogContent dividers>
+                {textComponents}
+            </DialogContent>
+        </Dialog>
+    );
+
+
+    return dialog;
 };
+
+
+function Subheader({ subheader }) {
+    return (
+        <CardHeader subheader={subheader} sx={{ py: 1 }} />
+    );
+}
 
 export { JobPostingCard };
