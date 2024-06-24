@@ -1,6 +1,5 @@
 import {
-    Collapse, Card, CardHeader, CardContent, CardActions, Typography, Link,
-    IconButton, Divider
+    Card, CardHeader, CardActions, Typography, Link, IconButton, Dialog
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useEffect, useState } from 'react';
@@ -13,7 +12,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 function JobPostingCard({ jobPosting }) {
     if (jobPosting === null) { return null; }
 
-    const [expanded, setExpanded] = useState(false);
+    const [open, setOpen] = useState(false);
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
 
@@ -48,10 +47,10 @@ function JobPostingCard({ jobPosting }) {
                 subheader={company}
                 sx={{ pb: 0 }}
                 action={
-                    <IconButton onClick={() => { setExpanded(!expanded); }}>
+                    <IconButton onClick={() => { setOpen(true); }}>
                         <ExpandMoreIcon
                             sx={{
-                                transform: !expanded ? 'rotate(180deg)' : ''
+                                transform: !open ? 'rotate(180deg)' : ''
                             }} />
                     </IconButton>
                 } />
@@ -74,13 +73,14 @@ function JobPostingCard({ jobPosting }) {
                         : <ThumbDownAltOutlinedIcon />}
                 </IconButton>
             </CardActions>
-            <Collapse in={expanded} timeout='auto' unmountOnExit>
-                <Divider />
-                <CardContent>
-                    <Typography variant='h6'>Job Description</Typography>
-                    <JobDescription jobDescriptionString={description} />
-                </CardContent>
-            </Collapse>
+            <Dialog
+                open={open}
+                onClose={() => { setOpen(false); }}
+                fullWidth={true}
+                maxWidth={"md"} >
+                <Typography variant='h6'>Job Description</Typography>
+                <JobDescription jobDescriptionString={description} />
+            </Dialog>
         </Card>
     );
 };
