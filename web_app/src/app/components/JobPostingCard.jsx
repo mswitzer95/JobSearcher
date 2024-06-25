@@ -11,6 +11,11 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import CloseIcon from '@mui/icons-material/Close';
 
 
+/**
+ * A React component representing a job posting as a MUI card
+ * @param {object} jobPosting - The job posting as a dictionary/JSON object
+ * @returns {object} JobPostingCard - the posting as a React component
+ */
 function JobPostingCard({ jobPosting }) {
     if (jobPosting === null) { return null; }
 

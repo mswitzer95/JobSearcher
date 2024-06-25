@@ -4,6 +4,9 @@ import { JobPostingCard } from './components/JobPostingCard';
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
+/**
+ * The main page of the application
+ */
 export default function Home() {
     const [jobPostings, setJobPostings] = useState([]);
 
