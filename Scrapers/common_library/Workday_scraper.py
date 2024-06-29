@@ -60,8 +60,7 @@ async def get_job_postings(
         "offset": 0,
         "searchText": search_text
     }
-    headers = {"Content-Type": "application/json"}
-    async with ClientSession(headers=headers) as session:
+    async with ClientSession() as session:
         response_text = await fetch_response_text(
             session=session, url=url, method="POST", params=params)
         response_json = loads(response_text)

@@ -32,8 +32,8 @@ async def get_job_postings(
     For example, Canandaigua National Bank & Trust's career search site is 
     "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=2e4e5521-e8a5-4572-9ffd-3c8e382ee6f2&ccId=19000101_000001"
     where "2e4e5521-e8a5-4572-9ffd-3c8e382ee6f2" is the c_id and 
-    "19000101_000001" is the cc_id. Check the URL of a specific employer's 
-    career site for specifics.
+    "19000101_000001" is the cc_id. Check the network tab of your browser when 
+    visiting a career site for employer specifics.
     """
     
     if (

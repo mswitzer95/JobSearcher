@@ -31,11 +31,16 @@ async def fetch_response_text(
         raise Exception("Invalid args.")
     
     if method == "GET":
-        url += (f"?{urlencode(params) if params else ''}")
+        url += (f"?{urlencode(params)}" if params else "")
         fetch_method = session.get(url)
     else:
-        data = dumps(params) if params else ""
-        fetch_method = session.post(url, data=data)
+        if params:
+            data = dumps(params)
+            headers = {"Content-Type": "application/json"}
+        else:
+            data = ""
+            headers = {}
+        fetch_method = session.post(url, data=data, headers=headers)
     async with fetch_method as response:
         status_code = response.status
         text = await response.text()
