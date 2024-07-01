@@ -11,3 +11,4 @@ The following are potential future areas of improvement to the project.
 * A matching algorithm that re-sorts postings based on similarity to postings already liked/disliked (likely using key-phrase extraction and the TF-IDF algorithm).
 * Incorporation of Glassdoor ratings on the web app job posting card UI component.
 * Incorporation of driving distance to a set "home" location on the web app job posting card UI component (likely using a Google API).
+* Querying and filtering of postings in the web app.
