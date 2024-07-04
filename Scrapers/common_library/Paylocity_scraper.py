@@ -33,7 +33,7 @@ async def get_job_postings(
     https://recruiting.paylocity.com/recruiting/jobs/All/79f94d92-d2c7-407b-923b-2c8ba8a4a263/Keuka-College-Faculty-Staff"
     where "79f94d92-d2c7-407b-923b-2c8ba8a4a263" is the employer_id, and
     "Keuka-College-Faculty Staff" is the employer_name. Through the website, 
-    one might submit a parameterized request of:
+    one might submit a parameterized search request of
     "https://recruiting.paylocity.com/recruiting/jobs/All/79f94d92-d2c7-407b-923b-2c8ba8a4a263/Keuka-College-Faculty-Staff?search=professor&location=Keuka%20College%20Main%20Campus&department=Academic%20Affairs"
     where "professor" is the search, "Keuka College Main Campus" is the 
     location, and "Academic Affairs" is the department. Check the address bar 

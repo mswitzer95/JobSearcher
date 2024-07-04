@@ -4,6 +4,7 @@ from tqdm.asyncio import tqdm
 import asyncio
 from importlib import import_module
 import logging
+from random import shuffle
 
 COMPANIES_DIR = path.join(".", "scrapers", "companies")
 RESULTS_FILE_NAME = path.join(".", "web_app", "public", "scraper_results.json")
@@ -30,19 +31,24 @@ async def main():
     Runs all scrapers in the "companies" directory
     """
     
-    # Error handle and logging for main function in each scraper module
+    semaphore = asyncio.Semaphore(3)
+    
+    # Wrapper with error handling, semaphore usage, and logging for main 
+    # function in each scraper module
     async def _try_scraper(module):
-        try:
-            postings = await module.main()
-            LOGGER.info(f"Found {len(postings)} job postings for " + 
-                        f"{module.COMPANY}.")
-        except Exception as exception:
-            LOGGER.warning(f"Got exception for {module.COMPANY}.")
-            LOGGER.exception(exception)
-            postings = []
-        return postings
+        async with semaphore:
+            try:
+                postings = await module.main()
+                LOGGER.info(f"Found {len(postings)} job postings for " + 
+                            f"{module.COMPANY}.")
+            except Exception as exception:
+                LOGGER.warning(f"Got exception for {module.COMPANY}.")
+                LOGGER.exception(exception)
+                postings = []
+            return postings
     
     scraper_tries = [_try_scraper(module) for module in SCRAPER_MODULES]
+    shuffle(scraper_tries)
     all_postings = await tqdm.gather(*scraper_tries)
     all_postings = sum(all_postings, [])
     with open(RESULTS_FILE_NAME, mode="w") as file:
