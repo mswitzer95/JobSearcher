@@ -52,15 +52,15 @@ function JobPostingCard({ jobPosting }) {
                 subheader={
                     <Link
                         href={link}
-                        target={'_blank'}
-                        rel={'noreferrer'}>
+                        target='_blank'
+                        rel='noreferrer'>
                         Link to Posting
                     </Link>
                 } />
             <Subheader
                 subheader={
                     <Link
-                        component={'button'}
+                        component='button'
                         onClick={() => { setOpen(true); }}>
                         Job Description
                     </Link>
@@ -68,24 +68,24 @@ function JobPostingCard({ jobPosting }) {
             <CardActions sx={{ pt: 1 }}>
                 <Grid
                     container
-                    direction={'row'}
-                    justifyContent={'space-between'}
-                    alignItems={'center'} >
+                    direction='row'
+                    justifyContent='space-between'
+                    alignItems='center' >
                     <IconButton
                         onClick={() =>
                             handleThumbClick(
                                 liked, setLiked, setDisliked)}>
                         {liked
-                            ? <ThumbUpIcon fontSize={'large'} />
-                            : <ThumbUpAltOutlinedIcon fontSize={'large'} />}
+                            ? <ThumbUpIcon fontSize='large' />
+                            : <ThumbUpAltOutlinedIcon fontSize='large' />}
                     </IconButton>
                     <IconButton
                         onClick={() =>
                             handleThumbClick(
                                 disliked, setDisliked, setLiked)}>
                         {disliked
-                            ? <ThumbDownIcon fontSize={'large'} />
-                            : <ThumbDownAltOutlinedIcon fontSize={'large'} />}
+                            ? <ThumbDownIcon fontSize='large' />
+                            : <ThumbDownAltOutlinedIcon fontSize='large' />}
                     </IconButton>
                 </Grid>
             </CardActions>
@@ -116,7 +116,7 @@ function JobDescription({ jobDescriptionString, open, setOpen }) {
             open={open}
             onClose={handleClose}
             fullWidth={true}
-            maxWidth={'md'} >
+            maxWidth='md' >
             <DialogTitle>Job Description</DialogTitle>
             <IconButton
                 onClick={handleClose}
