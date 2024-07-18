@@ -4,8 +4,15 @@ import {
 } from '@mui/material';
 import { SearchBar } from './search/SearchBar';
 
-
-function AppBar({ jobPostings }) {
+/**
+ * A React component representing an app bar 
+ * 
+ * @param {object} jobPostings - The job postings as an object/dictionary
+ * @param {function} - A React state setter for for the array of keys of which 
+ *      job postings to display
+ * @returns {object} AppBar - The React component
+ */
+function AppBar({ jobPostings, setDisplayPostingsIds }) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <MUIAppBar component='nav'>
@@ -16,7 +23,9 @@ function AppBar({ jobPostings }) {
                         justifyContent='space-between'
                         alignItems='center' >
                         <Typography variant='h6'>JobSearcher</Typography>
-                        <SearchBar jobPostings={jobPostings} />
+                        <SearchBar
+                            jobPostings={jobPostings}
+                            setDisplayPostingsIds={setDisplayPostingsIds} />
                     </Grid>
                 </Toolbar>
             </MUIAppBar>
@@ -24,5 +33,6 @@ function AppBar({ jobPostings }) {
         </Box>
     );
 }
+
 
 export { AppBar };
