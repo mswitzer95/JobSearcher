@@ -5,8 +5,6 @@ import {
 } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-const keysToSearch = ['company', 'title', 'description'];
-
 const tooltipText =
     `Enter your query here. Mulitple terms will be treated as an 'OR' ` +
     `search. Phrases should be surrounded with double quotes, such as ` +

@@ -3,7 +3,7 @@ from ..common_library.Ultipro_scraper import *
 ULTIPRO_OR_UKG = "UKG"
 EMPLYOER_ID = "GEN1500GNRB"
 JOB_BOARD_ID = "1f082171-3b2f-4eb9-909d-14fc8bcb72b1"
-COMPANY = "Genessee Regional Bank"
+COMPANY = "Genesee Regional Bank"
 UKG_EMPLOYER_DOMAIN = "grbbank"
 
 

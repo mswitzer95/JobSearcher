@@ -56,6 +56,7 @@ async def main():
         LOGGER.info(f"Job postings written to {RESULTS_FILE_NAME}.")
 
     print(f"Logs written to {LOGGING_FILE_NAME}.")
+    print(f"Results written to {RESULTS_FILE_NAME}.")
 
 
 if __name__ == "__main__":

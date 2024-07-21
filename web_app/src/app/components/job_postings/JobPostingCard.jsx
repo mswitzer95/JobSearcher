@@ -110,13 +110,26 @@ function JobPostingCard({ jobPosting }) {
 function JobDescription({ jobDescriptionString, open, setOpen }) {
     const handleClose = () => { setOpen(false); }
 
-    const paragraphs = jobDescriptionString.split('\n');
-    const textComponents = paragraphs.map((paragraph, index) =>
+    /*
+    const paragraphs =
+        jobDescriptionString.split('\n').filter(paragraph => paragraph.trim().length > 0);
+    const textComponents = paragraphs.map((paragraph, index) => 
         <Typography
-            gutterBottom={paragraph.replace(/\s/g, '').length !== 0} 
-            variant='body2' 
+            gutterBottom={paragraph.trim().length !== 0}
+            variant='body2'
             key={index}>
             {paragraph}
+        </Typography>
+    );
+    */
+
+    const textComponents = (
+        <Typography
+            gutterBottom
+            variant='body2'
+            style={{ whiteSpace: 'pre-line' }}
+        >
+            {jobDescriptionString.replace(/[\n]{3,}/g, '\n\n')}
         </Typography>
     );
 
@@ -142,7 +155,6 @@ function JobDescription({ jobDescriptionString, open, setOpen }) {
             </DialogContent>
         </Dialog>
     );
-
 
     return dialog;
 };
