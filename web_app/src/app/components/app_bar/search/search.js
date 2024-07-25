@@ -7,7 +7,7 @@ class SearchQuery {
     /**
      * 
      * @param {string} key - The key to search, or null to search all keys
-     * @param {string} query - The (sanitized) query to search for
+     * @param {string} query - The query to search for
      */
     constructor(key, query) {
         this.key = key;
@@ -27,7 +27,7 @@ class SearchQuery {
  * single space character, and trims leading and trailing whitespace.
  */
 function sanitizeString(originalString) {
-    let sanitizedString = originalString.replace(/[\W_]+/g, ' ');
+    let sanitizedString = originalString.replace(/[\W_]+/g, '');
     sanitizedString = sanitizedString.toLowerCase();
     sanitizedString = sanitizedString.replace(/\s+/g, ' ');
     sanitizedString = sanitizedString.trim();
@@ -57,7 +57,7 @@ function sanitizeString(originalString) {
  *      },
  *      {
  *          key: 'description,
- *          query: 'to tes'
+ *          query: 'to test'
  *      },
  * ]
  */

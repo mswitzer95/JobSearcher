@@ -8,11 +8,11 @@ import { SearchBar } from './search/SearchBar';
  * A React component representing an app bar 
  * 
  * @param {object} jobPostings - The job postings as an object/dictionary
- * @param {function} - A React state setter for for the array of keys of which 
- *      job postings to display
+ * @param {function} setSearchResultIds - A React state setter for the array 
+ *      of keys of which job postings are search results
  * @returns {object} AppBar - The React component
  */
-function AppBar({ jobPostings, setDisplayPostingsIds }) {
+function AppBar({ jobPostings, setSearchResultIds }) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <MUIAppBar component='nav'>
@@ -25,7 +25,7 @@ function AppBar({ jobPostings, setDisplayPostingsIds }) {
                         <Typography variant='h6'>JobSearcher</Typography>
                         <SearchBar
                             jobPostings={jobPostings}
-                            setDisplayPostingsIds={setDisplayPostingsIds} />
+                            setSearchResultIds={setSearchResultIds} />
                     </Grid>
                 </Toolbar>
             </MUIAppBar>

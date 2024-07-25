@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createSearchableObj, objectMatches, parseString } from './search';
 import {
-    TextField, IconButton, InputAdornment, Tooltip, Box, Typography
+    TextField, IconButton, InputAdornment, Tooltip, Typography
 } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 
@@ -17,11 +17,11 @@ const tooltipText =
  * A React component representing a search bar
  * 
  * @param {object} jobPostings - The job postings as an object/dictionary
- * @param {function} - A React state setter for for the array of keys of which 
- *      job postings to display
+ * @param {function} setSearchResultIds - A React state setter for the 
+ *      array of keys of which job postings are search results
  * @returns {object} SearchBar - The React component
  */
-function SearchBar({ jobPostings, setDisplayPostingsIds }) {
+function SearchBar({ jobPostings, setSearchResultIds }) {
     const [searchableJobPostings, setSearchableJobPostings] = useState({});
     const [searchValue, setSearchValue] = useState('');
     const [label, setLabel] = useState('Search...');
@@ -29,7 +29,7 @@ function SearchBar({ jobPostings, setDisplayPostingsIds }) {
     useEffect(() => {
         let newSearchableJobPostings = Object.fromEntries(
             Object.entries(jobPostings).map(entry => [
-                entry[0], createSearchableObj(entry[1])]));
+                entry[0], createSearchableObj(entry[1].postingInfo)]));
         setSearchableJobPostings(newSearchableJobPostings);
     }, [jobPostings]);
 
@@ -45,7 +45,7 @@ function SearchBar({ jobPostings, setDisplayPostingsIds }) {
                     objectMatches(entry[1], searchQueries)
                 ).map(entry => entry[0]);
         }
-        setDisplayPostingsIds(matchingPostingsIds);
+        setSearchResultIds(matchingPostingsIds);
         setLabel(
             'Search... (' +
             `${matchingPostingsIds.length}/` +

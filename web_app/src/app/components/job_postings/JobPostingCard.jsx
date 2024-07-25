@@ -1,47 +1,81 @@
 import {
     Card, CardHeader, CardActions, Typography, Link, IconButton, Dialog, 
-    DialogTitle, DialogContent, Grid
+    DialogTitle, DialogContent, Grid, Button
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
-import ThumbDownAltOutlinedIcon from
-    '@mui/icons-material/ThumbDownAltOutlined';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { useSnackbar } from 'notistack';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 
 
 /**
  * A React component representing a job posting as a MUI card
  * 
+ * @param {any} id - The posting's ID
  * @param {object} jobPosting - The job posting as a dictionary/JSON object
+ * @param {function} postingAttributeSetter - A function that sets a given 
+ *      attribute to a given value for a posting with a given ID. Generally
+ *      for setting the job posting's 'hidden' and 'favorited' attributes.
+ * 
  * @returns {object} JobPostingCard - the posting as a React component
  */
-function JobPostingCard({ jobPosting }) {
+function JobPostingCard({ id, jobPosting, postingAttributeSetter }) {
     if (jobPosting === null) { return null; }
 
-    const [open, setOpen] = useState(false);
-    const [liked, setLiked] = useState(false);
-    const [disliked, setDisliked] = useState(false);
+    const [descriptionOpen, setDescriptionOpen] = useState(false);
 
-    const handleThumbClick = (
-        thumbStatus, thumbStatusSetter, otherThumbStatusSetter) => {
-        let newThumbStatus = !thumbStatus;
-        thumbStatusSetter(newThumbStatus);
-        if (newThumbStatus) { otherThumbStatusSetter(false); }
-    };
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    const title = jobPosting.title;
-    const company = jobPosting.company;
-    const description = jobPosting.description;
-    const pay = jobPosting.pay;
-    const locations = jobPosting.locations;
-    const link = jobPosting.link; 
+    const title = jobPosting.postingInfo.title;
+    const company = jobPosting.postingInfo.company;
+    const description = jobPosting.postingInfo.description;
+    const pay = jobPosting.postingInfo.pay;
+    const locations = jobPosting.postingInfo.locations;
+    const link = jobPosting.postingInfo.link; 
 
     const locationsSubheader = 'Locations: ' +
         (locations.length > 0 ? locations.join('; ') : 'N/A');
 
-    const paySubheader = `Pay: ${pay !== null ? pay : 'N/A'}`;
+    const paySubheader = 'Pay: ' + (pay !== null ? pay : 'N/A');
+
+    function handleFavoriteClick() {
+        let newFavorited = !jobPosting.favorited;
+        postingAttributeSetter(id, 'favorited', newFavorited);
+        let snackbarText =
+            (newFavorited ? 'Favorited ' : 'Unfavorited ') +
+            `${title} at ${company}.`;
+        let action = snackbarId => (
+            <Button
+                onClick={() => {
+                    postingAttributeSetter(id, 'favorited', !newFavorited);
+                    closeSnackbar(snackbarId);
+                }} >
+                Undo
+            </Button>
+        );
+        enqueueSnackbar(snackbarText, { action, });
+    };
+
+    function handleHideClick() {
+        let newHidden = !jobPosting.hidden;
+        postingAttributeSetter(id, 'hidden', newHidden);
+        let snackbarText =
+            (newHidden ? 'Hid ' : 'Unhid ') +
+            `${title} at ${company}.`;
+        let action = snackbarId => (
+            <Button
+                onClick={() => {
+                    postingAttributeSetter(id, 'hidden', !newHidden);
+                    closeSnackbar(snackbarId);
+                }} >
+                Undo
+            </Button>
+        )
+        enqueueSnackbar(snackbarText, { action, });
+    };
 
     return (
         <Card variant='outlined'>
@@ -62,7 +96,7 @@ function JobPostingCard({ jobPosting }) {
                 subheader={
                     <Link
                         component='button'
-                        onClick={() => { setOpen(true); }}>
+                        onClick={() => { setDescriptionOpen(true); }}>
                         Job Description
                     </Link>
                 } />
@@ -72,28 +106,26 @@ function JobPostingCard({ jobPosting }) {
                     direction='row'
                     justifyContent='space-between'
                     alignItems='center' >
-                    <IconButton
-                        onClick={() =>
-                            handleThumbClick(
-                                liked, setLiked, setDisliked)}>
-                        {liked
-                            ? <ThumbUpIcon fontSize='large' />
-                            : <ThumbUpAltOutlinedIcon fontSize='large' />}
+                    <IconButton onClick={handleFavoriteClick}>
+                        {
+                            jobPosting.favorited
+                                ? <FavoriteIcon fontSize='large' />
+                                : <FavoriteBorderIcon fontSize='large' />
+                        }
                     </IconButton>
-                    <IconButton
-                        onClick={() =>
-                            handleThumbClick(
-                                disliked, setDisliked, setLiked)}>
-                        {disliked
-                            ? <ThumbDownIcon fontSize='large' />
-                            : <ThumbDownAltOutlinedIcon fontSize='large' />}
+                    <IconButton onClick={handleHideClick}>
+                        {
+                            jobPosting.hidden
+                                ? <DeleteIcon fontSize='large' />
+                                : <DeleteOutlineIcon fontSize='large' />
+                        }
                     </IconButton>
                 </Grid>
             </CardActions>
             <JobDescription
                 jobDescriptionString={description}
-                open={open}
-                setOpen={setOpen} />
+                open={descriptionOpen}
+                setOpen={setDescriptionOpen} />
         </Card>
     );
 };
@@ -109,19 +141,6 @@ function JobPostingCard({ jobPosting }) {
  */
 function JobDescription({ jobDescriptionString, open, setOpen }) {
     const handleClose = () => { setOpen(false); }
-
-    /*
-    const paragraphs =
-        jobDescriptionString.split('\n').filter(paragraph => paragraph.trim().length > 0);
-    const textComponents = paragraphs.map((paragraph, index) => 
-        <Typography
-            gutterBottom={paragraph.trim().length !== 0}
-            variant='body2'
-            key={index}>
-            {paragraph}
-        </Typography>
-    );
-    */
 
     const textComponents = (
         <Typography
