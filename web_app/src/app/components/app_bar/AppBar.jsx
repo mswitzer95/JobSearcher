@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { ExportButton } from './export/ExportButton';
+import { SearchBar } from './search/SearchBar';
 import {
     Box, AppBar as MUIAppBar, Toolbar, Grid, Typography
 } from '@mui/material';
-import { SearchBar } from './search/SearchBar';
 
 /**
  * A React component representing an app bar 
@@ -13,6 +14,9 @@ import { SearchBar } from './search/SearchBar';
  * @returns {object} AppBar - The React component
  */
 function AppBar({ jobPostings, setSearchResultIds }) {
+    let favoritedPostings =
+        Object.values(jobPostings).filter(posting => posting.favorited);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <MUIAppBar component='nav'>
@@ -23,6 +27,9 @@ function AppBar({ jobPostings, setSearchResultIds }) {
                         justifyContent='space-between'
                         alignItems='center' >
                         <Typography variant='h6'>JobSearcher</Typography>
+                        <ExportButton
+                            postingsToExport={favoritedPostings}
+                            buttonText={'Export Favorites'} />
                         <SearchBar
                             jobPostings={jobPostings}
                             setSearchResultIds={setSearchResultIds} />

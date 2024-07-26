@@ -1,5 +1,6 @@
-import { Pagination as MUIPagination, Box, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Pagination as MUIPagination, Box, Grid } from '@mui/material';
+
 
 /**
  * A React component representing a pagination element
@@ -37,7 +38,7 @@ function Pagination({ pageCount, page, setPage, sx }) {
  * 
  * @param {Array} array - The array to manipulate into pages
  * @param {int} elementsPerPage - The desired number of elements per page
- * @returns {Array.Array} The 2d array of pages
+ * @returns {Array.Array} pages - The 2d array of pages
  */
 function createPages(array, elementsPerPage) {
     let pageCount = Math.ceil(array.length / elementsPerPage);

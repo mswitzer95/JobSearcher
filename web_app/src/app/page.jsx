@@ -1,10 +1,10 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { JobPostingCardContainer }
     from './components/job_postings/JobPostingCardContainer';
 import { AppBar } from './components/app_bar/AppBar';
 import { Pagination, createPages } from './components/pagination/Pagination';
-import React, { useEffect, useState } from 'react';
 import { Box, CssBaseline } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 
