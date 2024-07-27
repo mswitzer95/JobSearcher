@@ -27,7 +27,7 @@ class SearchQuery {
  * single space character, and trims leading and trailing whitespace.
  */
 function sanitizeString(originalString) {
-    let sanitizedString = originalString.replace(/[\W_]+/g, '');
+    let sanitizedString = originalString.replace(/[^a-zA-Z0-9\s]/g, '');
     sanitizedString = sanitizedString.toLowerCase();
     sanitizedString = sanitizedString.replace(/\s+/g, ' ');
     sanitizedString = sanitizedString.trim();
