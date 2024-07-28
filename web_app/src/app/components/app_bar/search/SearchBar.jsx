@@ -13,6 +13,10 @@ const tooltipText =
     `with a colon, such as 'title:analyst'; if no field is specified for a ` +
     `term, all fields will be searched.`;
 
+const fieldsToSearch = [
+    'title', 'description', 'company'
+];
+
 /**
  * A React component representing a search bar
  * 
@@ -27,9 +31,17 @@ function SearchBar({ jobPostings, setSearchResultIds }) {
     const [label, setLabel] = useState('Search...');
 
     useEffect(() => {
+        console.log(jobPostings);
         let newSearchableJobPostings = Object.fromEntries(
-            Object.entries(jobPostings).map(entry => [
-                entry[0], createSearchableObj(entry[1].postingInfo)]));
+            Object.entries(jobPostings).map(e1 => [
+                e1[0], createSearchableObj(
+                    Object.fromEntries(
+                        Object.entries(e1[1].postingInfo).filter((e2) =>
+                            fieldsToSearch.includes(e2[0]))
+                    )
+                )
+            ])
+        );
         setSearchableJobPostings(newSearchableJobPostings);
     }, [jobPostings]);
 
