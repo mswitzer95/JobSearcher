@@ -10,9 +10,9 @@ APPLIED_FACETS = {
         "9819bf0148e54f89adb255aa7bead635"
     ],
     # Finance job family
-    "jobFamilyGroup": [
-        "386ae06b729c1000cdaa693ef3320000"
-    ]
+    #"jobFamilyGroup": [
+    #    "386ae06b729c1000cdaa693ef3320000"
+    #]
 }
 SEARCH_TEXT = ""
 

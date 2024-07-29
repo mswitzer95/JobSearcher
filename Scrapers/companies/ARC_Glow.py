@@ -3,7 +3,7 @@ from ..common_library.Dayforce_scraper import *
 EMPLOYER_NAME = "arcnewyork"
 JOB_BOARD_NAME = "ARCGLOW"
 COMPANY = "ARC Glow"
-PAY_CLASS = 1
+PAY_CLASS = None
 
 async def main():
     """

@@ -126,7 +126,8 @@ async def get_job_postings(
             job_posting = JobPosting(
                 title=title,
                 description=description,
-                company=company, pay=pay,
+                company=company,
+                pay=pay,
                 link=details_url,
                 locations=locations)
             return job_posting

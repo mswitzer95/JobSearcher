@@ -9,7 +9,8 @@ async def fetch_response_text(
         url: str,
         method: str,
         params: (dict, None)=None,
-        headers: dict={}
+        headers: dict={},
+        safe: str=""
         ) -> str:
     """
     GET requests a given URL, and gets the response's text in an async fashion
@@ -23,20 +24,21 @@ async def fetch_response_text(
             request, either as a query string if method is "GET" or as a body 
             if metohd is "POST".
         headers (dict, default={}): Extra headers to send with the request.
+        safe (str, default=""): Safe characters when encoding URL params
     Returns:
         str: The response's text
     """
     
     if (
         not isinstance(session, ClientSession)
-        or not all(isinstance(arg, str) for arg in [url, method])
+        or not all(isinstance(arg, str) for arg in [url, method, safe])
         or method not in ["GET", "POST"]
         or not isinstance(params, (dict, type(None)))
         or not isinstance(headers, dict)):
         raise Exception("Invalid args.")
     
     if method == "GET":
-        url += (f"?{urlencode(params)}" if params else "")
+        url += (f"?{urlencode(params, safe=safe)}" if params else "")
         fetch_method = session.get(url)
     else:
         if params:

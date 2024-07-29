@@ -6,7 +6,7 @@ COMPANY = "M&T Bank"
 WORKDAY_VERSION = "wd5"
 APPLIED_FACETS = {
     # Finance job family
-    "jobFamilyGroup": ["0765fb7811f20124700a82c924102104"]
+    #"jobFamilyGroup": ["0765fb7811f20124700a82c924102104"]
 }
 SEARCH_TEXT = "NY"
 

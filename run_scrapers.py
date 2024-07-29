@@ -45,6 +45,7 @@ async def main():
                 LOGGER.warning(f"Got exception for {module.COMPANY}.")
                 LOGGER.exception(exception)
                 postings = []
+            await asyncio.sleep(3.0)
             return postings
     
     scraper_tries = [_try_scraper(module) for module in SCRAPER_MODULES]

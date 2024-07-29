@@ -6,11 +6,11 @@ COMPANY = "Invesco"
 WORKDAY_VERSION = "wd1"
 APPLIED_FACETS = {
     # Finance, investments, and investment research job families
-    "jobFamilyGroup": [
-        "97a56ab3ad0b1018c66825ed807b0002",
-        "97a56ab3ad0b1018c66824ba54520002",
-        "97a56ab3ad0b1018c668241fbc1b0000"
-    ]
+    #"jobFamilyGroup": [
+    #    "97a56ab3ad0b1018c66825ed807b0002",
+    #    "97a56ab3ad0b1018c66824ba54520002",
+    #    "97a56ab3ad0b1018c668241fbc1b0000"
+    #]
 }
 SEARCH_TEXT = "New+York"
 

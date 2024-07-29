@@ -6,9 +6,9 @@ COMPANY = "Constellation Brands"
 WORKDAY_VERSION = "wd5"
 APPLIED_FACETS = {
     # Finance and accounting job family
-    "jobFamilyGroup": [
-        "c9530756020a10c56f194aabc62f05ea"
-    ]
+    #"jobFamilyGroup": [
+    #    "c9530756020a10c56f194aabc62f05ea"
+    #]
 }
 SEARCH_TEXT = "New+York"
 

@@ -6,7 +6,7 @@ COMPANY = "Keybank"
 WORKDAY_VERSION = "wd5"
 APPLIED_FACETS = {
     # Finance job family
-    "jobFamilyGroup": ["001793df81f21030a968ad0823ab4a25"]
+    #"jobFamilyGroup": ["001793df81f21030a968ad0823ab4a25"]
 }
 SEARCH_TEXT = "NY"
 

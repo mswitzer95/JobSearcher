@@ -4,7 +4,7 @@ EMPLOYER_NAME = "kodakalaris"
 JOB_BOARD_NAME = "CANDIDATEPORTAL"
 COMPANY = "Kodak Alaris"
 LOCATION = "Rochester, NY, USA"
-PAY_CLASS = 1
+PAY_CLASS = None #1
 
 async def main():
     """

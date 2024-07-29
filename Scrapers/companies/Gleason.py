@@ -4,7 +4,7 @@ EMPLOYER_NAME = "gleason"
 JOB_BOARD_NAME = "CANDIDATEPORTAL"
 COMPANY = "Gleason"
 LOCATION = "The Gleason Works, Rochester, New York, United States of America"
-PAY_CLASS = 1
+PAY_CLASS = None #1
 
 async def main():
     """
