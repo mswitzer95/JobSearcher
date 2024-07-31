@@ -71,6 +71,7 @@ async def get_job_postings(
             job_links += [
                 base_url + posting["externalPath"]
                 for posting in response_json["jobPostings"]
+                if "externalPath" in posting
             ]
             params["offset"] += 20
             if params["offset"] > total:
