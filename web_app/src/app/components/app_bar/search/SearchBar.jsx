@@ -31,7 +31,6 @@ function SearchBar({ jobPostings, setSearchResultIds }) {
     const [label, setLabel] = useState('Search...');
 
     useEffect(() => {
-        console.log(jobPostings);
         let newSearchableJobPostings = Object.fromEntries(
             Object.entries(jobPostings).map(e1 => [
                 e1[0], createSearchableObj(

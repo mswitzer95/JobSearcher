@@ -82,7 +82,7 @@ async def get_job_postings(
         job_ids = [job["JobId"] for job in jobs]
         
         async def _get_posting_for_job_id(job_id):
-            details_url = f"{BASE_DETAILS_URL}/{job_id}"
+            details_url = f"{BASE_DETAILS_URL}{job_id}"
             response_text = await fetch_response_text(
                 session=session, 
                 url=details_url, 
@@ -92,36 +92,46 @@ async def get_job_postings(
                 lambda tag: 
                     tag.name == "script" 
                     and '"@type":"JobPosting"' in tag.text)
-            script_text = script.text
-            posting_info = loads(
-                script_text[
-                    script_text.index("{"):
-                    script_text.rindex("}") + 1])
             
-            title = posting_info["title"]
+            if script:
+                script_text = script.text
+                posting_info = loads(
+                    script_text[
+                        script_text.index("{"):
+                        script_text.rindex("}") + 1])
             
-            description_soup = BeautifulSoup(
-                posting_info["description"], features="lxml")
-            description = description_soup.get_text("\n").strip()
+                title = posting_info["title"]
             
-            if "baseSalary" in posting_info:
-                base_salary = posting_info["baseSalary"]    
-                if "value" in base_salary["value"]:
-                    pay = str(base_salary["value"]["value"])
+                description_soup = BeautifulSoup(
+                    posting_info["description"], features="lxml")
+                description = description_soup.get_text("\n").strip()
+            
+                if "baseSalary" in posting_info:
+                    base_salary = posting_info["baseSalary"]    
+                    if "value" in base_salary["value"]:
+                        pay = str(base_salary["value"]["value"])
+                    else:
+                        pay = (
+                            str(posting_info["baseSalary"]["value"]["minValue"])
+                            + "-"
+                            + str(posting_info["baseSalary"]["value"]["minValue"]))
                 else:
-                    pay = (
-                        str(posting_info["baseSalary"]["value"]["minValue"])
-                        + "-"
-                        + str(posting_info["baseSalary"]["value"]["minValue"]))
-            else:
-                pay = None    
+                    pay = None    
 
             
-            locality = (
-                posting_info["jobLocation"]["address"]["addressLocality"])
-            region = (
-                posting_info["jobLocation"]["address"]["addressRegion"])
-            locations = [locality + ", " + region]
+                locality = (
+                    posting_info["jobLocation"]["address"]["addressLocality"])
+                region = (
+                    posting_info["jobLocation"]["address"]["addressRegion"])
+                locations = [locality + ", " + region]
+            else:
+                title = response_soup.find(
+                    "meta", attrs={"property": "og:title"}).get("content")
+                description = response_soup.find(
+                    "meta", attrs={"property": "og:description"}
+                    ).get("content")
+                pay = None
+                locations = []
             
             job_posting = JobPosting(
                 title=title,

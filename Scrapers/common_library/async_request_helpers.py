@@ -54,5 +54,9 @@ async def fetch_response_text(
         if status_code // 100 != 2:
             raise Exception(f"Requesting URL {url} returned status code of " + 
                             f"{status_code} with text of:\n\n{text}")
-        
+
+    # Sleep prevents "aiohttp.client_exceptions.ClientPayloadError", see: 
+    # https://github.com/aio-libs/aiohttp/issues/4549
+    await asyncio.sleep(1e-3)
+
     return text

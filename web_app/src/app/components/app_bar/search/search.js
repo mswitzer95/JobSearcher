@@ -83,7 +83,7 @@ function parseString(originalString) {
         originalString = originalString.replace(rawQuery, ' ');
     });
 
-    originalString = originalString.replace(/\s+/g, '');
+    originalString = originalString.replace(/\s+/g, ' ');
 
     originalString.split(' ').forEach((rawQuery) => {
         let query = new SearchQuery(null, rawQuery);

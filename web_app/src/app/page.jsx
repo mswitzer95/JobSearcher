@@ -96,10 +96,15 @@ export default function Home({ }) {
             : []
     );
 
+    // Scroll to top on pagination
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [page]);
+
     return (
         <React.Fragment>
             <CssBaseline>
-                <SnackbarProvider>
+                <SnackbarProvider autoHideDuration={3000}>
                     <Box>
                         <AppBar
                             jobPostings={jobPostings}

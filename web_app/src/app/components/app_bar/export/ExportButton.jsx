@@ -9,7 +9,6 @@ import { Box, Button } from '@mui/material';
  * @returns {object} ExportButton - The React component
  */
 function ExportButton({ postingsToExport, buttonText }) {
-    let newPostings = Object.values(postingsToExport);
 
     function handleClick() {
         let headers, rows;
@@ -31,9 +30,11 @@ function ExportButton({ postingsToExport, buttonText }) {
             rows = [];
         }
         let csvContent ='data:text/csv;charset=utf-8,'
-            + rows.map(row => row.join(',')).join('\n');
-        let encodedUri = encodeURI(csvContent);
-        window.open(encodedUri);
+            + encodeURIComponent(
+                rows.map(row => row.join(',')).join('\n'));
+        //let encodedUri = encodeURIComponent(csvContent);
+        //window.open(encodedUri);
+        window.open(csvContent);
     }
 
     return (

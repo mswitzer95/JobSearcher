@@ -3,7 +3,7 @@ from ..common_library.Dayforce_scraper import *
 EMPLOYER_NAME = "gleason"
 JOB_BOARD_NAME = "CANDIDATEPORTAL"
 COMPANY = "Gleason"
-LOCATION = "The Gleason Works, Rochester, New York, United States of America"
+LOCATION = "Rochester, NY, USA"
 PAY_CLASS = None #1
 
 async def main():

@@ -41,12 +41,17 @@ function JobPostingCard({ id, jobPosting, postingAttributeSetter }) {
 
     const paySubheader = 'Pay: ' + (pay !== null ? pay : 'N/A');
 
+    const abbreviatedTitle =
+        title.slice(0, 20) + (title.length > 20 ? '...' : '');
+    const abbreviatedCompany =
+        company.slice(0, 20) + (company.length > 20 ? '...' : '');
+
     function handleFavoriteClick() {
         let newFavorited = !jobPosting.favorited;
         postingAttributeSetter(id, 'favorited', newFavorited);
         let snackbarText =
             (newFavorited ? 'Favorited ' : 'Unfavorited ') +
-            `${title} at ${company}.`;
+            `${abbreviatedTitle} at ${abbreviatedCompany}.`;
         let action = snackbarId => (
             <Button
                 onClick={() => {
@@ -64,7 +69,7 @@ function JobPostingCard({ id, jobPosting, postingAttributeSetter }) {
         postingAttributeSetter(id, 'hidden', newHidden);
         let snackbarText =
             (newHidden ? 'Hid ' : 'Unhid ') +
-            `${title} at ${company}.`;
+            `${abbreviatedTitle} at ${abbreviatedCompany}.`;
         let action = snackbarId => (
             <Button
                 onClick={() => {
