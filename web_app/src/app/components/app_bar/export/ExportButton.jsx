@@ -29,7 +29,8 @@ function ExportButton({ postingsToExport, buttonText }) {
         } else {
             rows = [];
         }
-        let csvContent ='data:text/csv;charset=utf-8,'
+        let csvContent =
+            encodeURI('data:text/csv;charset=utf-8,')
             + encodeURIComponent(
                 rows.map(row => row.join(',')).join('\n'));
         //let encodedUri = encodeURIComponent(csvContent);
