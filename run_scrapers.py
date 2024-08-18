@@ -19,6 +19,13 @@ SCRAPER_MODULES = [
     ]
 ]
 
+# Defines the pause in seconds after each scraper try, and the number of 
+# scrapers to run concurrently. Currently set to 1 (effectively synchronous) 
+# to overcome ADP request limit issues (which could also be fixed with proxies)
+SCRAPER_SLEEP = 5.0
+SEMAPHORE_VALUE = 1
+
+
 # Setting up logging
 LOGGING_FILE_NAME = path.join(".", "scrapers", "scraper_results.log")
 open(LOGGING_FILE_NAME, mode="w").close()
@@ -31,7 +38,7 @@ async def main():
     Runs all scrapers in the "companies" directory
     """
     
-    semaphore = asyncio.Semaphore(3)
+    semaphore = asyncio.Semaphore(SEMAPHORE_VALUE)
     
     # Wrapper with error handling, semaphore usage, and logging for main 
     # function in each scraper module
@@ -45,7 +52,7 @@ async def main():
                 LOGGER.warning(f"Got exception for {module.COMPANY}.")
                 LOGGER.exception(exception)
                 postings = []
-            await asyncio.sleep(3.0)
+            await asyncio.sleep(SCRAPER_SLEEP)
             return postings
     
     scraper_tries = [_try_scraper(module) for module in SCRAPER_MODULES]

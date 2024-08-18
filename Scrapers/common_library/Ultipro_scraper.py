@@ -174,11 +174,21 @@ async def get_job_postings(
             
             locations = [
                 (
-                    location["Address"]["City"] if location["Address"]["City"]
+                    location["Address"]["City"] 
+                    if (
+                        isinstance(location.get("Address", None), dict)
+                        and isinstance(
+                            location["Address"].get("City", None), str))
                     else "Unknown City")
                 + ", " + (
                     location["Address"]["State"]["Code"]
-                    if location["Address"]["State"]["Code"]
+                    if (
+                        isinstance(location.get("Address", None), dict)
+                        and isinstance(
+                            location["Address"].get("State", None), dict)
+                        and isinstance(
+                            location["Address"]["State"].get("Code", None),
+                            str))
                     else "Unknown State"
                     )
                 for location in posting_info["Locations"]]
